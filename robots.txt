@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://circulachido.com/sitemap.xml
+
+# Disallow crawling of potential sensitive areas
+Disallow: /recursos_mediakit/
+Disallow: /*.DS_Store
+
+# Allow specific crawlers for app stores
+User-agent: Applebot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+# Crawl delay (optional - helps with server load)
+Crawl-delay: 1
