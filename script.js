@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Launch countdown functionality
+    initLaunchCountdown();
+    
     // Animation functionality
     const sectionsToAnimate = document.querySelectorAll('.fade-in-section');
 
@@ -107,4 +110,77 @@ function showDownloadDialog(buttonText, filename) {
             dialog.remove();
         }
     }, 10000);
+}
+
+// Launch countdown functionality
+function initLaunchCountdown() {
+    // Set the launch date to August 15, 2025 at midnight Mexico City time
+    const launchDate = new Date('2025-08-15T00:00:00-06:00').getTime();
+    
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    
+    // Check if countdown elements exist
+    if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
+        return;
+    }
+    
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const timeRemaining = launchDate - now;
+        
+        if (timeRemaining > 0) {
+            const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+            
+            daysEl.textContent = days.toString().padStart(2, '0');
+            hoursEl.textContent = hours.toString().padStart(2, '0');
+            minutesEl.textContent = minutes.toString().padStart(2, '0');
+            secondsEl.textContent = seconds.toString().padStart(2, '0');
+        } else {
+            // Launch date has passed
+            daysEl.textContent = '00';
+            hoursEl.textContent = '00';
+            minutesEl.textContent = '00';
+            secondsEl.textContent = '00';
+            
+            // Hide countdown and show launch message
+            const countdownContainer = document.querySelector('.launch-countdown');
+            const countdownLabel = document.querySelector('.countdown-label');
+            if (countdownContainer && countdownLabel) {
+                countdownLabel.textContent = '¡Ya está disponible!';
+                countdownLabel.style.color = 'var(--brand-primary)';
+                countdownLabel.style.fontSize = '1.3rem';
+                
+                // Enable store links
+                const storeLinks = document.querySelectorAll('.store-link.disabled');
+                storeLinks.forEach(link => {
+                    link.classList.remove('disabled');
+                    const overlay = link.querySelector('.disabled-overlay');
+                    if (overlay) {
+                        overlay.remove();
+                    }
+                    
+                    // Convert div back to anchor tag with actual URLs
+                    if (link.classList.contains('play-store-link')) {
+                        link.onclick = () => window.open('https://play.google.com/store/apps/details?id=com.eliaschao.circulachido', '_blank');
+                    } else {
+                        link.onclick = () => window.open('https://apps.apple.com/app/circulachido/id6738284104', '_blank');
+                    }
+                    link.style.cursor = 'pointer';
+                });
+                
+                // Stop the countdown
+                clearInterval(countdownInterval);
+            }
+        }
+    }
+    
+    // Update immediately and then every second
+    updateCountdown();
+    const countdownInterval = setInterval(updateCountdown, 1000);
 }
