@@ -114,8 +114,8 @@ function showDownloadDialog(buttonText, filename) {
 
 // Launch countdown functionality
 function initLaunchCountdown() {
-    // Set the launch date to August 15, 2025 at midnight Mexico City time
-    const launchDate = new Date('2025-08-15T00:00:00-06:00').getTime();
+    // Set the launch date to September 2, 2025 at midnight Mexico City time
+    const launchDate = new Date('2025-09-02T00:00:00-06:00').getTime();
     
     const daysEl = document.getElementById('days');
     const hoursEl = document.getElementById('hours');
