@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Launch countdown functionality
-    initLaunchCountdown();
     
     // Animation functionality
     const sectionsToAnimate = document.querySelectorAll('.fade-in-section');
